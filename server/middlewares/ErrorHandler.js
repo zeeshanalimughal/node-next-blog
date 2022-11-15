@@ -18,9 +18,12 @@ class ErrorHandler extends Error {
     static notFound(statusCode, message = "404 Not Found") {
         return new ErrorHandler(statusCode, message)
     }
-    static serverError(statusCode, message = "Internal server error") {
+    static serverError(statusCode=500, message = "Internal server error") {
         return new ErrorHandler(statusCode, message)
     }
 }
+
+
+
 
 module.exports =  ErrorHandler;

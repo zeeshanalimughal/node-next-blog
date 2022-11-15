@@ -1,10 +1,10 @@
-import jwt from "jsonwebtoken";
-import Token from "../models";
+const jwt  = require("jsonwebtoken");
+const {User} = require("../models")
 const { ACCESS_TOKEN_JWT_SECRET, REFRESH_TOKEN_JWT_SECRET } = require('../config')
 
 const generateTokens = async (user) => {
     try {
-        const payload = { _id: user._id, roles: user.roles };
+        const payload = { _id: user._id, isAdmin: user.isAdmin,email:user.email };
         const accessToken = jwt.sign(
             payload,
             ACCESS_TOKEN_JWT_SECRET,
@@ -16,14 +16,17 @@ const generateTokens = async (user) => {
             { expiresIn: "30d" }
         );
 
-        const userToken = await Token.findOne({ userId: user._id });
-        if (userToken) await userToken.remove();
-
-        await new Token({ userId: user._id, token: refreshToken }).save();
-        return Promise.resolve({ accessToken, refreshToken });
+        const userExists = await User.findOne({ userId: user._id });
+        if (userExists){
+            await User.findByIdAndUpdate(
+            {_id:user._id},
+            {$set : {refreshToken}}
+            );
+        }
+        return  Promise.resolve({ accessToken, refreshToken });
     } catch (err) {
         return Promise.reject(err);
     }
 };
 
-export default generateTokens;
+module.exports =  {generateTokens};
