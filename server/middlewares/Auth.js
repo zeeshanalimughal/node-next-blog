@@ -4,10 +4,10 @@ const { ACCESS_TOKEN_JWT_SECRET } = require('../config')
 const ErrorHandler = require('../middlewares/ErrorHandler')
 
 const varifyToken = async (req, res, next) => {
-    const token = '';
-    if (!token) return res.status(TOKEN_NOT_FOUND.statusCode).json(TOKEN_NOT_FOUND.message);
+    const token = req.cookies.access_token;
+    if (!token) return res.status(TOKEN_NOT_FOUND.statusCode).json({status:TOKEN_NOT_FOUND.statusCode,message:TOKEN_NOT_FOUND.message});
     jwt.verify(token, ACCESS_TOKEN_JWT_SECRET, (err, user) => {
-        if (err) return res.status(INVALID_TOKEN.statusCode).json(INVALID_TOKEN.message);
+        if (err) return res.status(INVALID_TOKEN.statusCode).json({status:TOKEN_NOT_FOUND.statusCode,message:INVALID_TOKEN.message});
         req.user = user;
         next()
     })

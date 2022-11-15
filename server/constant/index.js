@@ -2,6 +2,7 @@ const ErrorMessages = {
     ALREADY_EXISTS: { statusCode: 409, message: 'Already Esists' },
     CREATED_SUCCESS: { statusCode: 201, message: 'Created Successfully' },
     LOGIN_SUCCESS: { statusCode: 200, message: 'Logged in Successfully' },
+    PASSWORD_CHANGED: { statusCode: 200, message: 'Password Changed Successfully' },
     WRONG_CREDENTIALS: { statusCode: 401, message: 'Wrong Credentials' },
     UNAUTHENTICATED: { statusCode: 401, message: 'Unauthorizes Action' },
     TOKEN_NOT_FOUND: { statusCode: 401, message: 'Not Authenticated' },

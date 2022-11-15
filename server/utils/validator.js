@@ -23,11 +23,29 @@ exports.loginAccountValidation = (body) => {
     return error
 
 }
+exports.passwordValidate = (body) => {
+    const schema = Joi.object({
+        oldPassword: Joi.required().label("Old Password"),
+        newPassword: passwordComplexity().required().label("New Password"),
+    })
+    const {error}  =schema.validate(body)
+    return error
+
+}
 
 exports.refreshTokenValidation = (body) => {
     const schema = Joi.object({
         refreshToken: Joi.string().required().label("Refresh Token"),
     });
-    return schema.validate(body);
+    const {error}  =schema.validate(body)
+    return error
+}
+exports.validateImageFile = (body) => {
+    const schema = Joi.object({
+        filename: Joi.string().required().label("File"),
+        path: Joi.string().required()
+      });
+    const {error}  =schema.validate(body)
+    return error
 }
 
