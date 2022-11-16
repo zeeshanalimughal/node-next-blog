@@ -24,6 +24,7 @@
     "mongoose": "^6.6.3",
     "morgan": "^1.10.0",
     "multer": "*",
-    "rotating-file-stream": "^3.0.4"
+    "rotating-file-stream": "^3.0.4",
+    "uuid": "^9.0.0"
   }
 }

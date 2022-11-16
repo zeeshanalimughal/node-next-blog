@@ -40,10 +40,12 @@ exports.refreshTokenValidation = (body) => {
     const {error}  =schema.validate(body)
     return error
 }
-exports.validateImageFile = (body) => {
+exports.validateBlogPostSchema = (body) => {
     const schema = Joi.object({
-        filename: Joi.string().required().label("File"),
-        path: Joi.string().required()
+        title: Joi.string().required().label("Blog title"),
+        description: Joi.string().required().label("Blog Description"),
+        categoryId: Joi.string().required().label("Category Id"),
+        isFeatured: Joi.boolean().required().label("Is Featured"),
       });
     const {error}  =schema.validate(body)
     return error
