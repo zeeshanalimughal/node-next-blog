@@ -15,7 +15,7 @@ class ErrorHandler extends Error {
         console.log("SDdsds")
         return new ErrorHandler(statusCode, message)
     }
-    static notFound(statusCode, message = "404 Not Found") {
+    static notFound(statusCode=404, message = "404 Not Found") {
         return new ErrorHandler(statusCode, message)
     }
     static unCaughtError(statusCode, message) {

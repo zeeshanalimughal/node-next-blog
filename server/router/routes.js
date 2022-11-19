@@ -17,6 +17,7 @@ router.get('/logout',authController.logout)
 // Blog Routes
 router.post('/blogs/create',varifyToken,varifyUser,blogController.createBlog)
 router.get('/blogs',varifyToken,varifyUser,blogController.getBlogPost)
+router.get('/blogs/:slug',varifyToken,varifyUser,blogController.getSingleBlogPost)
 
 
 

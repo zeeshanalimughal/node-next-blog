@@ -52,8 +52,10 @@ const createBlog = async (req, res, next) => {
             }
             try {
                req.file.filename = fileName;
+               const slug = req.body.title.toLowerCase().split(' ').join('-').trim();
                const blog = await Blog.create({
                   ...req.body,
+                  slug,
                   author: req.user._id,
                   post_image: fileName
                })
@@ -81,9 +83,28 @@ const createBlog = async (req, res, next) => {
 
 
 const getBlogPost = async (req, res,next) =>{
-   const blogs = await Blog.find({}).populate('author',['-password','-refreshToken','-createdAt','-updatedAt','-__v']).populate('categoryId').sort({createdAt:-1}).lean().exec();
-   return res.status(200).json({ status: 200, blogs })
+   try{
+      const blogs = await Blog.find({}).populate('author',['-password','-refreshToken','-createdAt','-updatedAt','-__v']).populate('categoryId').sort({createdAt:-1}).lean().exec();
+      return res.status(200).json({ status: 200, blogs })
+   }catch(err){
+      return next(ErrorHandler.unCaughtError(500, err.code))
+   }
+}
+
+const getSingleBlogPost = async (req, res,next) =>{
+   try{
+      const {slug} = req.params
+      const blogSingle = await Blog.findOne({'slug':slug}).populate('author',['-password','-refreshToken','-createdAt','-updatedAt','-__v']).populate('categoryId').lean().exec();
+      console.log(blogSingle)
+      if(blogSingle){
+         return res.status(200).json({ status: 200, blogSingle })
+      }
+      return next(ErrorHandler.notFound())
+
+   }catch(err){
+      return next(ErrorHandler.unCaughtError(500, err.code))
+   }
 }
 
 
-module.exports = { createBlog,getBlogPost }
+module.exports = { createBlog,getBlogPost,getSingleBlogPost }

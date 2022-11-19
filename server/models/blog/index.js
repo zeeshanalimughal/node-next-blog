@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const blogSchema = new Schema({
     title: { type: String,unique:true },
+    slug: { type: String,unique:true },
     description: { type: String },
     post_image: { type: String },
     author: { type: Schema.Types.ObjectId, ref: "User" },

@@ -43,6 +43,7 @@ exports.refreshTokenValidation = (body) => {
 exports.validateBlogPostSchema = (body) => {
     const schema = Joi.object({
         title: Joi.string().required().label("Blog title"),
+        slug: Joi.string().label("Blog Slug"),
         description: Joi.string().required().label("Blog Description"),
         categoryId: Joi.string().required().label("Category Id"),
         isFeatured: Joi.boolean().required().label("Is Featured"),
