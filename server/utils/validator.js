@@ -7,7 +7,6 @@ exports.registarAccountValidation = (body) => {
         fullname: Joi.string().required().label("Full Name"),
         email: Joi.string().email().required().label("Email"),
         password: passwordComplexity().required().label("Password"),
-        isAdmin: Joi.boolean().truthy(true).falsy(false).sensitive(),
     })
     const {error}  =schema.validate(body)
     return error

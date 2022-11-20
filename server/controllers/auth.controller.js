@@ -13,7 +13,7 @@ const register = async (req, res, next) => {
             const err = NODE_ENV !== 'production' ? error?.details : error?.details[0]?.message
             return next(new ErrorHandler(401, err))
         }
-        const { email, password } = req.body
+        const { email, password,username,fullname } = req.body
 
         const userExists = await User.findOne({ email })
         if (userExists) {
@@ -21,7 +21,7 @@ const register = async (req, res, next) => {
         }
         const salt = bcryptjs.genSaltSync(10)
         const hashPassword = await bcryptjs.hash(password, salt);
-        const user = await User.create({ ...req.body, password: hashPassword })
+        const user = await User.create({ username,fullname, password: hashPassword })
         if (user) {
             generateTokens(user).then(tokens => {
                 return res.cookie("access_token", tokens.accessToken, {

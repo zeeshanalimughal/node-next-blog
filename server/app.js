@@ -8,6 +8,9 @@ const morgan = require('morgan')
 const rfs = require("rotating-file-stream");
 const ErrorMiddleware = require('./middlewares/errors')
 const cookieParser = require("cookie-parser");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
+
 const path = require('path')
 const app = express()
 
@@ -48,12 +51,16 @@ app.use(morgan(config.LOG_FORMAT || "dev", {
 
 
 //  Error Handler Middleware
+app.use(ErrorMiddleware)
+
+
+// Swagger Api Documentation Endpoint
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 
 // Routes
 
 app.use('/api', require('./router/routes'))
 
-app.use(ErrorMiddleware)
 
 module.exports = app
